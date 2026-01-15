@@ -1,24 +1,24 @@
-\# EVRP India — Time-Optimal EV Routing with Charging Awareness
+# EVRP India — Time-Optimal EV Routing with Charging Awareness
 
 
 
-This repository implements a \*\*time-optimal Electric Vehicle Routing Problem (EVRP)\*\* pipeline for Indian cities, integrating:
+This repository implements a **time-optimal Electric Vehicle Routing Problem (EVRP)** pipeline for Indian cities, integrating:
 
 
 
-\- Traffic-aware routing (Google Directions API)
+- Traffic-aware routing (Google Directions API)
 
-\- Physics-based EV energy consumption modeling
+- Physics-based EV energy consumption modeling
 
-\- Probabilistic charging station availability
+- Probabilistic charging station availability
 
-\- Charging-aware route planning (single charging stop)
+- Charging-aware route planning (single charging stop)
 
-\- Interactive map visualization with SOC tracking
+- Interactive map visualization with SOC tracking
 
 
 
-> ⚠️ Current scope: \*\*single charging stop only\*\*, suitable for short to medium distance trips.
+> ⚠️ Current scope: **single charging stop only**, suitable for short to medium distance trips.
 
 
 
@@ -26,19 +26,19 @@ This repository implements a \*\*time-optimal Electric Vehicle Routing Problem (
 
 
 
-\## 1. What This Project Does
+## 1. What This Project Does
 
 
 
 Given:
 
-\- an \*\*origin\*\*
+- an **origin**
 
-\- a \*\*destination\*\*
+- a **destination**
 
-\- an \*\*EV configuration\*\*
+- an **EV configuration**
 
-\- a \*\*departure time\*\*
+- a **departure time**
 
 
 
@@ -46,17 +46,17 @@ The system computes:
 
 
 
-1\. The \*\*fastest route\*\* using real-time traffic
+1. The **fastest route** using real-time traffic
 
-2\. The \*\*energy consumption\*\* along that route using elevation and speed
+2. The **energy consumption** along that route using elevation and speed
 
-3\. Whether the trip is \*\*feasible without charging\*\*
+3. Whether the trip is **feasible without charging**
 
-4\. If not feasible:
+4. If not feasible:
 
-&nbsp;  - proactively chooses a \*\*charging station before SOC reaches reserve\*\*
+&nbsp;  - proactively chooses a **charging station before SOC reaches reserve**
 
-&nbsp;  - minimizes \*\*expected total travel time\*\*, accounting for:
+&nbsp;  - minimizes **expected total travel time**, accounting for:
 
 &nbsp;    - driving time
 
@@ -64,7 +64,7 @@ The system computes:
 
 &nbsp;    - charging time
 
-5\. Outputs:
+5. Outputs:
 
 &nbsp;  - total travel time
 
@@ -80,31 +80,31 @@ The system computes:
 
 
 
-\## 2. Architecture Overview
+## 2. Architecture Overview
 
 
 
-This project (`evrp\_india`) works together with a \*\*separate backend\*\*:
+This project (`evrp_india`) works together with a **separate backend**:
 
 
 
-\### A. `evrp\_india` (this repo)
+### A. `evrp_india` (this repo)
 
 Responsible for:
 
-\- Routing (Google Directions)
+- Routing (Google Directions)
 
-\- Energy modeling
+- Energy modeling
 
-\- Planning logic
+- Planning logic
 
-\- Visualization
+- Visualization
 
 
 
-\### B. Charging Availability Backend
+### B. Charging Availability Backend
 
-A separate service: https://github.com/suharoy/evrp\_charge\_availability\_backend
+A separate service: https://github.com/suharoy/evrp_charge_availability_backend
 
 
 
@@ -112,13 +112,13 @@ A separate service: https://github.com/suharoy/evrp\_charge\_availability\_backe
 
 It provides:
 
-\- `/stations/nearby`
+- `/stations/nearby`
 
-\- `/recommend` → probabilistic charger availability (`p\_success`)
+- `/recommend` → probabilistic charger availability (`p_success`)
 
 
 
-This backend \*\*must be running\*\* for charging-aware planning.
+This backend **must be running** for charging-aware planning.
 
 
 
@@ -126,11 +126,11 @@ This backend \*\*must be running\*\* for charging-aware planning.
 
 
 
-\## 3. Project Structure
+## 3. Project Structure
 
 
 
-evrp\_india/
+evrp_india/
 
 ├── src/
 
@@ -140,17 +140,17 @@ evrp\_india/
 
 │ ├── planner/
 
-│ │ └── min\_time\_with\_charging.py
+│ │ └── min_time_with_charging.py
 
 │ ├── routing/
 
-│ │ ├── google\_api.py # Directions + elevation
+│ │ ├── google_api.py # Directions + elevation
 
-│ │ └── google\_energy\_profile.py
+│ │ └── google_energy_profile.py
 
 │ ├── charging/
 
-│ │ └── availability\_client.py
+│ │ └── availability_client.py
 
 │ ├── models/
 
@@ -158,7 +158,7 @@ evrp\_india/
 
 │ └── viz/
 
-│ └── map\_viz.py # Folium visualization
+│ └── map_viz.py # Folium visualization
 
 ├── data/ # (empty except cache, ignored)
 
@@ -172,13 +172,13 @@ evrp\_india/
 
 
 
-\## 4. How the Planning Logic Works
+## 4. How the Planning Logic Works
 
 
 
-\### Step 1 — Fastest Route
+### Step 1 — Fastest Route
 
-Uses \*\*Google Directions API\*\* with traffic:
+Uses **Google Directions API** with traffic:
 
 origin → destination
 
@@ -192,15 +192,15 @@ Returns geometry, duration, and per-step info.
 
 
 
-\### Step 2 — Energy Estimation
+### Step 2 — Energy Estimation
 
 For each step:
 
-\- distance / duration → speed
+- distance / duration → speed
 
-\- elevation difference → slope
+- elevation difference → slope
 
-\- applies EV physics model:
+- applies EV physics model:
 
 &nbsp; - rolling resistance
 
@@ -214,9 +214,9 @@ For each step:
 
 Produces:
 
-\- total energy (kWh)
+- total energy (kWh)
 
-\- step-wise energy consumption
+- step-wise energy consumption
 
 
 
@@ -224,19 +224,19 @@ Produces:
 
 
 
-\### Step 3 — Direct Feasibility Check
+### Step 3 — Direct Feasibility Check
 
 Let:
 
-\- usable energy = `battery\_kwh × SOC\_START`
+- usable energy = `battery_kwh × SOC_START`
 
-\- reserve = `battery\_kwh × SOC\_MIN`
+- reserve = `battery_kwh × SOC_MIN`
 
 
 
 If:
 
-direct\_energy ≤ usable − reserve
+direct_energy ≤ usable − reserve
 
 → no charging needed.
 
@@ -246,17 +246,17 @@ direct\_energy ≤ usable − reserve
 
 
 
-\### Step 4 — SOC Critical Point
+### Step 4 — SOC Critical Point
 
 If not feasible:
 
-\- simulate SOC along the route
+- simulate SOC along the route
 
-\- find the first point where SOC would hit reserve
+- find the first point where SOC would hit reserve
 
 
 
-This is the \*\*danger point\*\*.
+This is the **danger point**.
 
 
 
@@ -264,19 +264,19 @@ This is the \*\*danger point\*\*.
 
 
 
-\### Step 5 — Proactive Charging Search
+### Step 5 — Proactive Charging Search
 
 Instead of waiting until reserve:
 
-\- look \*\*backwards\*\* from the critical point
+- look **backwards** from the critical point
 
-\- sample points along the route
+- sample points along the route
 
-\- query `/recommend(lat, lon, time)` for chargers
+- query `/recommend(lat, lon, time)` for chargers
 
 
 
-This allows \*\*charging before SOC becomes critical\*\*.
+This allows **charging before SOC becomes critical**.
 
 
 
@@ -284,21 +284,21 @@ This allows \*\*charging before SOC becomes critical\*\*.
 
 
 
-\### Step 6 — Charger Evaluation (Single Stop)
+### Step 6 — Charger Evaluation (Single Stop)
 
 For each candidate charger `C`:
 
-\- route `origin → C`
+- route `origin → C`
 
-\- route `C → destination`
+- route `C → destination`
 
-\- compute:
+- compute:
 
 &nbsp; - energy for both legs
 
 &nbsp; - charging time
 
-&nbsp; - expected waiting time using `p\_success`
+&nbsp; - expected waiting time using `p_success`
 
 
 
@@ -316,7 +316,7 @@ The best charger is selected.
 
 
 
-\## 5. Visualization
+## 5. Visualization
 
 
 
@@ -324,13 +324,13 @@ The output map (`routes.html`) shows:
 
 
 
-\- Fastest route (purple polyline)
+- Fastest route (purple polyline)
 
-\- All charging stations along the route corridor (⚡ icons)
+- All charging stations along the route corridor (⚡ icons)
 
-\- Chosen charging stop (green ⚡)
+- Chosen charging stop (green ⚡)
 
-\- Dense SOC dots along the route
+- Dense SOC dots along the route
 
 &nbsp; - hover shows SOC percentage at that location
 
@@ -344,19 +344,19 @@ No animation or legends are used — the map is kept minimal and readable.
 
 
 
-\## 6. How to Run
+## 6. How to Run
 
 
 
-\### A. Start the Charging Backend (Terminal 1)
+### A. Start the Charging Backend (Terminal 1)
 
 
 
 ```bash
 
-cd evrp\_charge\_availability\_backend
+cd evrp_charge_availability_backend
 
-.venv/bin/activate   # or .venv\\Scripts\\activate on Windows
+.venv/bin/activate   # or .venvScriptsactivate on Windows
 
 python scripts/serve.py
 
@@ -366,15 +366,15 @@ http://###.0.0.1:8000
 
 
 
-\### B. Run EVRP Planner (Terminal 2)
+### B. Run EVRP Planner (Terminal 2)
 
-cd evrp\_india
+cd evrp_india
 
 .venv/bin/activate
 
 python -m src.main
 
-
+```
 
 
 
