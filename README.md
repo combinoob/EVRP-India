@@ -1,6 +1,6 @@
 # EVRP India — Time-Optimal EV Routing with Charging Awareness
 
-
+![EVRP_Bengaluru_Mysuru](image.png)
 
 This repository implements a **time-optimal Electric Vehicle Routing Problem (EVRP)** pipeline for Indian cities, integrating:
 
