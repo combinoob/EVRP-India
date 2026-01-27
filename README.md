@@ -12,7 +12,7 @@ This repository implements a **time-optimal Electric Vehicle Routing Problem (EV
 
 - Probabilistic charging station availability
 
-- Charging-aware route planning (single charging stop)
+- Charging-aware route planning
 
 - Interactive map visualization with SOC tracking
 
