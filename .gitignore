@@ -5,7 +5,7 @@ __pycache__/
 *.pyd
 *.egg-info/
 
-# G-API
+# G-API 
 .env
 
 # Virtual environment
