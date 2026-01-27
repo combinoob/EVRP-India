@@ -334,7 +334,6 @@ For each candidate charger `C`:
 &nbsp; - expected waiting time using `p_success`
 
 
-
 Objective:
 
 minimize expected total time
@@ -347,9 +346,17 @@ The best charger is selected.
 
 ---
 
+### 5. Extension to Multiple Stations
 
+- We divide the whole long route into parts.
+  
+- The prigin is now set to Charging Station 1 for the first part.
+  
+- Starting SOC is set to 100.
+  
+- This recursion solves the routing problem for long distances, although latency is high.
 
-## 5. Visualization
+### 6. Visualization
 
 
 
@@ -361,7 +368,7 @@ The output map (`routes.html`) shows:
 
 - All charging stations along the route corridor (⚡ icons)
 
-- Chosen charging stop (green ⚡)
+- Chosen charging stop(s) (green ⚡)
 
 - Dense SOC dots along the route
 
