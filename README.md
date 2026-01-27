@@ -17,11 +17,6 @@ This repository implements a **time-optimal Electric Vehicle Routing Problem (EV
 - Interactive map visualization with SOC tracking
 
 
-
-> ⚠️ Current scope: **single charging stop only**, suitable for short to medium distance trips.
-
-
-
 ---
 
 ## How to Run
